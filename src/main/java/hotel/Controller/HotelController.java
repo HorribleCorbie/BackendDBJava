@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/rooms")
 class HotelController {
-
     private final HotelRepository repository;
 
     HotelController(HotelRepository repository) {
@@ -33,6 +32,20 @@ class HotelController {
                 .orElseThrow(() -> new RoomNotFoundException(id));
     }
 
+    @GetMapping("/number/{number}")
+    Room FindByNumber(@PathVariable int number) {
+        if (repository.existsByNumber(number))
+        {
+            return repository.findByNumber(number);
+        }
+        else throw new RoomNotFoundException(number);
+    }
+
+    @GetMapping("/check")
+    boolean RoomByNumber(@RequestParam int number) {
+        return repository.existsByNumber(number);
+    }
+
     @PutMapping("/{id}")
     boolean update(@RequestBody  Room room,@PathVariable Long id) {
         if (!repository.existsById(id)) {
@@ -48,8 +61,8 @@ class HotelController {
         return true;
     }
 
-    @DeleteMapping("/{id}")
-    void deleteEmployee(@PathVariable Long id) {
-        repository.deleteById(id);
+    @DeleteMapping("/{number}")
+    void deleteRoom(@PathVariable int number) {
+        repository.deleteByNumber(number);
     }
 }
