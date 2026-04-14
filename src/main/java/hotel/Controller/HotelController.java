@@ -3,6 +3,7 @@ package hotel.Controller;
 import java.util.List;
 import  hotel.Model.HotelRepository;
 import hotel.Model.Room;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,22 +47,22 @@ class HotelController {
         return repository.existsByNumber(number);
     }
 
-    @PutMapping("/{id}")
-    boolean update(@RequestBody  Room room,@PathVariable Long id) {
-        if (!repository.existsById(id)) {
-            return false;
-        }
-        Room existingRoom = repository.findById(id).get();
+    @PutMapping("/{number}")
+    boolean update(@RequestBody  Room room, @PathVariable int number) {
+        Room existingRoom = repository.findByNumber(number);
         existingRoom.setNumber(room.getNumber());
         existingRoom.setPrice(room.getPrice());
         existingRoom.setCapacity(room.getCapacity());
         existingRoom.setComfort(room.getComfort());
         existingRoom.setArea(room.getArea());
         repository.save(existingRoom);
-        return true;
+        if (repository.existsByNumber(number))
+            return true;
+        else return false;
     }
 
     @DeleteMapping("/{number}")
+    @Transactional
     void deleteRoom(@PathVariable int number) {
         repository.deleteByNumber(number);
     }

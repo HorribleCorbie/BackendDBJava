@@ -12,16 +12,16 @@ public class Room {
     @SequenceGenerator(name = "rooms_seq", sequenceName = "rooms_seq", allocationSize = 1)
     private Long id;
     @Column(name = "number")
-    private int number; //номер комнаты
+    private int number;
     @Column(name = "price")
-    private float price; //цена
+    private float price;
     @Column(name = "capacity")
-    private int capacity; // кол-во людей
+    private int capacity;
     @Column(name = "ComfortClass")
     @Enumerated(EnumType.STRING)
-    private ComfortClass comfort; // класс комфорта
+    private ComfortClass comfort;
     @Column(name = "area")
-    private float area; //площадь
+    private float area;
 
     public Room(int number, float price, int capacity, ComfortClass comfort, float area) {
         this.number = number;
@@ -53,16 +53,6 @@ public class Room {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(this.id, this.name, this.role);
-//    }
-
-//    @Override
-//    public String toString() {
-//        return "Employee{" + "id=" + this.id + ", name='" + this.name + '\'' + ", role='" + this.role + '\'' + '}';
-//    }
 
     public ComfortClass getComfort() {
         return comfort;
