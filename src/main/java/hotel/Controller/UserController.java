@@ -40,22 +40,19 @@ public class UserController {
     boolean checkLogin(@PathVariable String login) {
         return repository.existsByLogin(login);
     }
+
     @GetMapping("/check")
     boolean checkId(@RequestParam Long id) {
         return repository.existsById(id);
     }
 
-    @PutMapping("/{id}")
-    boolean update(@RequestBody  AppUser user, @PathVariable Long id) {
-        AppUser newUser =repository.findById(id)
-                        .orElseThrow(() -> new UserNotFoundException(id));
+    @PutMapping("/{login}")
+    AppUser update(@RequestBody  AppUser user, @PathVariable String login) {
+        AppUser newUser =repository.findByLogin(login);
         newUser.setLogin(user.getLogin());
         newUser.setName(user.getName());
         newUser.setPassword(user.getPassword());
-        repository.save(newUser);
-        if (repository.existsById(id))
-            return true;
-        else return false;
+        return  repository.save(newUser);
     }
 
 }
