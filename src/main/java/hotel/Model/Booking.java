@@ -27,6 +27,18 @@ public class Booking {
     @Column(name = "price")
     private float price;
 
+    public Booking() {
+    }
+
+    public Booking(Long id, Room room, AppUser client, LocalDate in_date, LocalDate out_date, float price) {
+        this.id = id;
+        this.room = room;
+        this.client = client;
+        this.in_date = in_date;
+        this.out_date = out_date;
+        this.price = price;
+    }
+
     public float getPrice() {
         return price;
     }

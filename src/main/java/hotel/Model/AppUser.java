@@ -14,6 +14,15 @@ public class AppUser {
     private String login;
     @Column(name = "password")
     private String password;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Column(name = "name")
     private String name;
     @Column(name = "role")
