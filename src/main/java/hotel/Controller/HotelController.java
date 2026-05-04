@@ -1,5 +1,6 @@
 package hotel.Controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import  hotel.Model.HotelRepository;
 import hotel.Model.Room;
@@ -21,12 +22,17 @@ class HotelController {
         return repository.findAll();
     }
 
+    @GetMapping("/bookings")
+    List<Room> allRoomsforBookings(@RequestParam LocalDate start, @RequestParam LocalDate end) {
+        return repository.findBySelectedBookings(start, end);
+    }
+
     @PostMapping
     Room newRoom(@RequestBody Room room) {
         return repository.save(room);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\\\d+}")
     Room one(@PathVariable Long id) {
 
         return repository.findById(id)

@@ -1,5 +1,6 @@
 package hotel.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,11 +17,23 @@ public class Booking {
     private Room room;
     @ManyToOne
     @JoinColumn(name = "id_client", nullable = false)
-    private AppUser user;
+    private AppUser client;
     @Column(name = "check_in_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate in_date;
     @Column(name = "check_out_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate out_date;
+    @Column(name = "price")
+    private float price;
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
     public Room getRoom() {
         return room;
@@ -31,11 +44,11 @@ public class Booking {
     }
 
     public AppUser getUser() {
-        return user;
+        return client;
     }
 
-    public void setUser(AppUser user) {
-        this.user = user;
+    public void setUser(AppUser client) {
+        this.client = client;
     }
 
     public LocalDate getIn_date() {
@@ -54,10 +67,11 @@ public class Booking {
         this.out_date = out_date;
     }
 
-    public Booking(Room room, AppUser user, LocalDate in_date, LocalDate out_date) {
+    public Booking(Room room, AppUser client, LocalDate in_date, LocalDate out_date,float price) {
         this.room = room;
-        this.user = user;
+        this.client = client;
         this.in_date = in_date;
         this.out_date = out_date;
+        this.price=price;
     }
 }
