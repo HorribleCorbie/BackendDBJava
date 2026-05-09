@@ -27,6 +27,11 @@ class HotelController {
         return repository.findBySelectedBookings(start, end);
     }
 
+    @GetMapping("/update_bookings")
+    List<Room> allRoomsforBookings(@RequestParam LocalDate start, @RequestParam LocalDate end, @RequestParam Long id) {
+        return repository.findBySelectedBookings(start, end, id);
+    }
+
     @PostMapping
     Room newRoom(@RequestBody Room room) {
         return repository.save(room);

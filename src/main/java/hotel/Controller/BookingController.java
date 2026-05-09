@@ -22,7 +22,6 @@ public class BookingController {
 
     @PostMapping
     Booking newBooking(@RequestBody BookingRequest booking) {
-        System.out.println("Received: " + booking);
         var room = repositoryHotel.findByNumber(booking.getRoomId());
         var user = repositoryUser.findByLogin(booking.getLogin());
         float price = Float.parseFloat(booking.getPrice());
@@ -58,11 +57,14 @@ public class BookingController {
     }
 
     @PutMapping("/{id}")
-    Booking update(@RequestBody Booking booking, @PathVariable Long id) {
+    Booking update(@RequestBody BookingRequest booking, @PathVariable Long id) {
         Booking newBooking = repository.findById(id).orElseThrow(() -> new BookingNotFoundException(id));
-        newBooking.setRoom(booking.getRoom());
+        float price = Float.parseFloat(booking.getPrice());
+        var room = repositoryHotel.findByNumber(booking.getRoomId());
+        newBooking.setRoom(room);
         newBooking.setIn_date(booking.getIn_date());
         newBooking.setOut_date(booking.getOut_date());
+        newBooking.setPrice(price);
         return repository.save(newBooking);
     }
 }
