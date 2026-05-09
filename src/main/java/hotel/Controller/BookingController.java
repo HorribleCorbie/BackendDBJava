@@ -20,11 +20,6 @@ public class BookingController {
         this.repositoryUser = repositoryUser;
     }
 
-
-//    public BookingController(BookingRepository repository) {
-//        this.repository = repository;
-//    }
-
     @PostMapping
     Booking newBooking(@RequestBody BookingRequest booking) {
         System.out.println("Received: " + booking);
@@ -49,6 +44,11 @@ public class BookingController {
     Booking one(@PathVariable Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new BookingNotFoundException(id));
+    }
+
+    @GetMapping("/check")
+    boolean BookingById(@RequestParam Long id) {
+        return repository.existsById(id);
     }
 
     @DeleteMapping("/delete/{id}")

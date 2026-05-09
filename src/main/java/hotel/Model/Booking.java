@@ -39,6 +39,22 @@ public class Booking {
         this.price = price;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public AppUser getClient() {
+        return client;
+    }
+
+    public void setClient(AppUser client) {
+        this.client = client;
+    }
+
     public float getPrice() {
         return price;
     }
