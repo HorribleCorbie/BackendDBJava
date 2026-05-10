@@ -25,8 +25,12 @@ public class BookingController {
         var room = repositoryHotel.findByNumber(booking.getRoomId());
         var user = repositoryUser.findByLogin(booking.getLogin());
         float price = Float.parseFloat(booking.getPrice());
-        Booking newBooking = new Booking(room, user, booking.getIn_date(),booking.getOut_date(),price);
-        return repository.save(newBooking);
+        if (repository.available(room.getId(), booking.getIn_date(),booking.getOut_date()))
+        {
+            Booking newBooking = new Booking(room, user, booking.getIn_date(),booking.getOut_date(),price);
+            return repository.save(newBooking);
+        }
+        else throw new BookingNotAvailableException();
     }
 
     @GetMapping
